@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-Indexxx
+<ul>
+    {% for key, char in character %}
+    <li>{{ char }} is <b>{{ key }}</b></li>
+    {% endfor %}
+</ul>
 {% endblock %}
