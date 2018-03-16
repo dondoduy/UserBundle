@@ -13,12 +13,12 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('role_hierarchy');
+        $rootNode = $treeBuilder->root('user_bundle');
 
         $rootNode
             ->children()
                 ->scalarNode('role_class')->isRequired()->cannotBeEmpty()->end()
-                ->scalarNode('role_manager')->defaultValue('role_hierarchy.role_manager.default')->end()
+                ->scalarNode('role_manager')->defaultValue('user_bundle.role_manager.default')->end()
             ->end();
 
         return $treeBuilder;

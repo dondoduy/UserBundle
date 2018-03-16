@@ -1,17 +1,17 @@
 services:
     app.form_login_authenticator:
         class: Xtraball\UserBundle\Security\FormLoginAuthenticator
-        arguments: ["@router", "@security.password_encoder"]
-    role_hierarchy.role_manager.default:
+        arguments: ["@router", "@security.password_encoder", "@security.csrf.token_manager"]
+    user_bundle.role_manager.default:
         class: Xtraball\UserBundle\Model\RoleManager
-        arguments: ['@doctrine', '%role_hierarchy.role_class%']
-    xtraball.role_hierarchy:
+        arguments: ['@doctrine', '%user_bundle.role_class%']
+    xtraball.user_bundle:
         class: Xtraball\UserBundle\Security\RoleHierarchy
         public: false
-        arguments: ['@role_hierarchy.role_manager']
-    xtraball.role_hierarchy_voter:
+        arguments: ['@user_bundle.role_manager']
+    xtraball.user_bundle_voter:
         class: Xtraball\UserBundle\Security\RoleHierarchyVoter
         public: false
         tags:
             - { name: security.voter, priority: 240 }
-        arguments: ['@xtraball.role_hierarchy']
+        arguments: ['@xtraball.user_bundle']

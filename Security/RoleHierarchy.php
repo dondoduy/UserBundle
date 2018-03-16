@@ -2,7 +2,7 @@
 
 namespace Xtraball\UserBundle\Security;
 
-use Xtraball\UserBundle\Model\RoleInterface;
+use Xtraball\UserBundle\Entity\Role;
 use Xtraball\UserBundle\Model\RoleManagerInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchy as BaseRoleHierarchy;
 
@@ -29,7 +29,7 @@ final class RoleHierarchy extends BaseRoleHierarchy
         $hierarchy = [];
         $roles = $role_manager->getRoles();
         foreach ($roles as $role) {
-            if ($role instanceof RoleInterface) {
+            if ($role instanceof Role) {
                 if ($role->getParent()) {
                     if (!isset($hierarchy[$role->getParent()->getName()])) {
                         $hierarchy[$role->getParent()->getName()] = [];

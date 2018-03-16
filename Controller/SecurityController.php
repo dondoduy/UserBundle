@@ -16,7 +16,7 @@ class SecurityController extends Controller
        $helper = $this->get('security.authentication_utils');
 
        return $this->render(
-           'auth/login.html.twig',
+           '@XtraballUserBundle/auth/login.html.twig',
            array(
                'last_username' => $helper->getLastUsername(),
                'error' => $helper->getLastAuthenticationError(),

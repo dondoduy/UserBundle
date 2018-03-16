@@ -26,7 +26,7 @@ class ListController extends Controller
           'Lord Varys' => 'Conleth Hill'
         ];
 
-        return $this->render('default/index.html.twig', [
+        return $this->render('@XtraballUserBundle/default/index.html.twig', [
             'character' => $characters
         ]);
     }

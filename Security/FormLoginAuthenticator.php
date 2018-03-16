@@ -13,22 +13,31 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 {
     private $router;
     private $encoder;
+    private $csrfTokenManager;
 
-    public function __construct(RouterInterface $router, UserPasswordEncoderInterface $encoder)
+    public function __construct(RouterInterface $router,
+                                UserPasswordEncoderInterface $encoder,
+                                CsrfTokenManagerInterface $csrfTokenManager)
     {
         $this->router = $router;
         $this->encoder = $encoder;
+        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() != '/login_check') {
-            return;
+        $csrfToken = $request->request->get('_csrf_token');
+
+        if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $csrfToken))) {
+            throw new InvalidCsrfTokenException('Invalid CSRF token.');
         }
 
         $email = $request->request->get('_email');
@@ -86,11 +95,11 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function supports(Request $request)
     {
-        // TODO: Implement supports() method.
+        return ($request->getPathInfo() === '/login_check');
     }
 
     public function supportsRememberMe()
     {
-        return false;
+        return true;
     }
 }

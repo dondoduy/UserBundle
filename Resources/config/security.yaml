@@ -1,19 +1,19 @@
 # To get started with security, check out the documentation:
-# http://symfony.com/doc/current/book/security.html
-security:
-    encoders:
-        Xtraball\UserBundle\Entity\User: bcrypt
-    providers:
-        database_users:
-            entity:
-              class: Xtraball\UserBundle\Entity\User
-              property: email
-    firewalls:
-        main:
-            anonymous: ~
-            guard:
-                authenticators:
-                    - app.form_login_authenticator
-            logout:
-                path: /logout
-                target: /
+## http://symfony.com/doc/current/book/security.html
+#security:
+#    encoders:
+#        Xtraball\UserBundle\Entity\User: bcrypt
+#    providers:
+#        database_users:
+#            entity:
+#              class: Xtraball\UserBundle\Entity\User
+#              property: email
+#    firewalls:
+#        main:
+#            anonymous: ~
+#            guard:
+#                authenticators:
+#                    - app.form_login_authenticator
+#            logout:
+#                path: /logout
+#                target: /
